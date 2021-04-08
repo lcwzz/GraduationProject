@@ -42,4 +42,12 @@
         left join t_admin a on(e.adminId=a.id)
         where e.doctorId=#{doctorId};
     </select>
+
+    <insert id="insertRecord" parameterType="Record" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_record(time, state, doctorId)
+        values(#{time}, #{state}, #{doctorId});
+    </insert>
+    <select id="findRecordsById" parameterType="int" resultType="Record">
+        select * from t_record where doctorId=#{doctorId} order by time desc;
+    </select>
 </mapper>

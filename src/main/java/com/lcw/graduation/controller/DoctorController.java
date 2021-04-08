@@ -1,5 +1,6 @@
 package com.lcw.graduation.controller;
 
+import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
 import com.lcw.graduation.service.DoctorService;
@@ -54,6 +55,34 @@ public class DoctorController {
         try {
             List<ExtraVO> extraList = doctorService.findExtra(doctorId);
             responseData.setSuccess(true).setData(extraList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @PostMapping("signIn")
+    public ResponseData signIn(@RequestBody Map<String, String> requestData) {
+        log.info("requestData: " + requestData.toString());
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.signIn(requestData);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("打卡出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("findRecords")
+    public ResponseData findRecords(@RequestParam("id") Integer doctorId) {
+        log.info("doctorId: " + doctorId);
+        ResponseData responseData = new ResponseData();
+        try {
+            List<Record> records = doctorService.findRecords(doctorId);
+            responseData.setSuccess(true).setData(records);
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setSuccess(false).setMessage("查询出错，请重试！");

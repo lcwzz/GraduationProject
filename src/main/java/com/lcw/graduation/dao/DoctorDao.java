@@ -1,5 +1,6 @@
 package com.lcw.graduation.dao;
 
+import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
 
@@ -12,4 +13,8 @@ public interface DoctorDao {
     void updateDoctor(DoctorVO doctorVO);
 
     List<ExtraVO> findExtraById(Integer doctorId);
+
+    void insertRecord(Record record);
+
+    List<Record> findRecordsById(Integer doctorId);
 }
