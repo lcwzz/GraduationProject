@@ -2,10 +2,13 @@ package com.lcw.graduation.service.impl;
 
 import com.lcw.graduation.dao.DoctorDao;
 import com.lcw.graduation.entity.vo.DoctorVO;
+import com.lcw.graduation.entity.vo.ExtraVO;
 import com.lcw.graduation.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -25,5 +28,15 @@ public class DoctorServiceImpl implements DoctorService {
             throw new RuntimeException("密码错误！");
         }
         return doctorVO;
+    }
+
+    @Override
+    public void update(DoctorVO doctorVO) {
+        doctorDao.updateDoctor(doctorVO);
+    }
+
+    @Override
+    public List<ExtraVO> findExtra(Integer doctorId) {
+        return doctorDao.findExtraById(doctorId);
     }
 }

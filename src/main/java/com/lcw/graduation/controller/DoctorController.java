@@ -1,12 +1,14 @@
 package com.lcw.graduation.controller;
 
 import com.lcw.graduation.entity.vo.DoctorVO;
+import com.lcw.graduation.entity.vo.ExtraVO;
 import com.lcw.graduation.service.DoctorService;
 import com.lcw.graduation.util.ResponseData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,6 +29,34 @@ public class DoctorController {
             responseData.setSuccess(true).setData(doctorVO);
         } catch (Exception e) {
             responseData.setSuccess(false).setMessage(e.getMessage());
+        }
+        return responseData;
+    }
+
+    @PostMapping("update")
+    public ResponseData update(@RequestBody DoctorVO doctorVO) {
+        log.info(doctorVO.toString());
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.update(doctorVO);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("更新出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("findExtra")
+    public ResponseData findExtra(@RequestParam("id") Integer doctorId) {
+        log.info("doctorId: " + doctorId);
+        ResponseData responseData = new ResponseData();
+        try {
+            List<ExtraVO> extraList = doctorService.findExtra(doctorId);
+            responseData.setSuccess(true).setData(extraList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
         }
         return responseData;
     }

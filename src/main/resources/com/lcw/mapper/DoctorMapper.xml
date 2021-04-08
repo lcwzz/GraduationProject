@@ -20,4 +20,26 @@
         from t_doctor d left join t_department de on(d.departmentId=de.id)
         where account=#{account};
     </select>
+
+    <update id="updateDoctor" parameterType="DoctorVO">
+        update t_doctor set
+               password = #{password},
+               name = #{name},
+               sex = #{sex},
+               age = #{age},
+               face = #{face},
+               education = #{education}
+        where id=#{id};
+    </update>
+
+    <select id="findExtraById" parameterType="int" resultType="ExtraVO">
+        select e.id id,
+               money,
+               sign,
+               reason,
+               a.name name
+        from t_extra e
+        left join t_admin a on(e.adminId=a.id)
+        where e.doctorId=#{doctorId};
+    </select>
 </mapper>
