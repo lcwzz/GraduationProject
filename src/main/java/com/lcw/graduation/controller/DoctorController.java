@@ -1,8 +1,10 @@
 package com.lcw.graduation.controller;
 
+import com.lcw.graduation.entity.po.Project;
 import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.service.DoctorService;
 import com.lcw.graduation.util.ResponseData;
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +88,34 @@ public class DoctorController {
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("findProjects")
+    public ResponseData findProjects(@RequestParam("id") Integer doctorId) {
+        log.info("doctorId: " + doctorId);
+        ResponseData responseData = new ResponseData();
+        try {
+            List<ProjectVO> projects = doctorService.findProjects(doctorId);
+            responseData.setSuccess(true).setData(projects);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @PostMapping("addProject")
+    public ResponseData addProject(@RequestBody Project project) {
+        log.info(project.toString());
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.addProject(project);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("添加出错，请重试！");
         }
         return responseData;
     }

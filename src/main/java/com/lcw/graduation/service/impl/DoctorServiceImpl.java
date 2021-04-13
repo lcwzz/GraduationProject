@@ -1,9 +1,12 @@
 package com.lcw.graduation.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.lcw.graduation.dao.DoctorDao;
+import com.lcw.graduation.entity.po.Project;
 import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,5 +76,23 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Record> findRecords(Integer doctorId) {
         return doctorDao.findRecordsById(doctorId);
+    }
+
+    @Override
+    public List<ProjectVO> findProjects(Integer doctorId) {
+        List<ProjectVO> projects = doctorDao.findProjectsById(doctorId);
+        for (ProjectVO project : projects) {
+            if (StringUtils.isEmpty(project.getName())) {
+                project.setName("暂无数据");
+            }
+        }
+        return projects;
+    }
+
+    @Override
+    public void addProject(Project project) {
+        project.setState("已申请，未审核");
+        project.setDate(new Timestamp(System.currentTimeMillis()));
+        doctorDao.insertProject(project);
     }
 }
