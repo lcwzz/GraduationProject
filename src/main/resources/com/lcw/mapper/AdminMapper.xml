@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lcw.graduation.dao.AdminDao">
+    <select id="findByAccount" parameterType="String" resultType="Admin">
+        select * from t_admin where account=#{account};
+    </select>
+
+    <update id="updateAdmin" parameterType="Admin">
+        update t_admin set
+               password = #{password},
+               name = #{name},
+               sex = #{sex},
+               age = #{age},
+               face = #{face},
+               education = #{education}
+        where id=#{id};
+    </update>
+</mapper>
