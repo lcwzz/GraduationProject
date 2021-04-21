@@ -91,7 +91,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void addProject(Project project) {
-        project.setState("已申请，未审核");
+        project.setState("未审核");
         project.setDate(new Timestamp(System.currentTimeMillis()));
         doctorDao.insertProject(project);
     }

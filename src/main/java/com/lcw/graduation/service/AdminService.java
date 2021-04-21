@@ -6,9 +6,11 @@ import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminService {
     Admin login(String account, String password);
@@ -32,4 +34,8 @@ public interface AdminService {
     void addOrUpdateExtra(Extra extra);
 
     void deleteExtra(Integer id);
+
+    List<ProjectVO> getAllProjects(Integer adminId);
+
+    void checkProject(Map<String, String> checkResult);
 }

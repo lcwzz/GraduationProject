@@ -78,4 +78,15 @@
     <delete id="deleteExtraById" parameterType="int">
         delete from t_extra where id=#{id};
     </delete>
+
+    <select id="getProjectsByAdminId" parameterType="int" resultType="ProjectVO">
+        select p.*, d.name name from t_project p
+        left join t_doctor d on(p.doctorId = d.id)
+        where adminId=#{adminId} or adminId is null;
+    </select>
+
+    <update id="updateProjectState">
+        update t_project set state=#{state}, adminId=#{adminId}
+        where id=#{id};
+    </update>
 </mapper>

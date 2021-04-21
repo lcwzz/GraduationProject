@@ -48,12 +48,7 @@
     </select>
 
     <select id="findProjectsById" parameterType="int" resultType="ProjectVO">
-        select p.id id,
-               description,
-               state,
-               date,
-               money,
-               a.name name
+        select p.*, a.name name
         from t_project p left join t_admin a on(p.adminId = a.id)
         where doctorId=#{doctorId} order by date desc;
     </select>

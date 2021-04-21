@@ -6,7 +6,9 @@ import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -35,4 +37,10 @@ public interface AdminDao {
     void updateExtra(Extra extra);
 
     void deleteExtraById(Integer id);
+
+    List<ProjectVO> getProjectsByAdminId(Integer adminId);
+
+    void updateProjectState(@Param("id") Integer id,
+                            @Param("state") String state,
+                            @Param("adminId") Integer adminId);
 }

@@ -6,6 +6,7 @@ import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 import com.lcw.graduation.service.AdminService;
 import com.lcw.graduation.util.ResponseData;
@@ -171,6 +172,34 @@ public class AdminController {
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setSuccess(false).setMessage("删除出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("getAllProjects")
+    public ResponseData getAllProjects(@RequestParam("id") Integer adminId) {
+        log.info("adminId: " + adminId);
+        ResponseData responseData = new ResponseData();
+        try {
+            List<ProjectVO> projects = adminService.getAllProjects(adminId);
+            responseData.setSuccess(true).setData(projects);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @PostMapping("checkProject")
+    public ResponseData checkProject(@RequestBody Map<String, String> checkResult) {
+        log.info(checkResult.toString());
+        ResponseData responseData = new ResponseData();
+        try {
+            adminService.checkProject(checkResult);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("审核出错，请重试！");
         }
         return responseData;
     }

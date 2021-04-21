@@ -7,6 +7,7 @@ import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ExtraVO;
+import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 import com.lcw.graduation.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -87,6 +89,19 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteExtra(Integer id) {
         adminDao.deleteExtraById(id);
+    }
+
+    @Override
+    public List<ProjectVO> getAllProjects(Integer adminId) {
+        return adminDao.getProjectsByAdminId(adminId);
+    }
+
+    @Override
+    public void checkProject(Map<String, String> checkResult) {
+        Integer id = Integer.valueOf(checkResult.get("id"));
+        String state = checkResult.get("state");
+        Integer adminId = Integer.valueOf(checkResult.get("adminId"));
+        adminDao.updateProjectState(id, state, adminId);
     }
 
 }
