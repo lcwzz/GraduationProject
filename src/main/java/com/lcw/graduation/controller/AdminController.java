@@ -5,7 +5,6 @@ import com.lcw.graduation.entity.po.Department;
 import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.DoctorVO;
-import com.lcw.graduation.entity.vo.ExtraVO;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 import com.lcw.graduation.service.AdminService;
@@ -134,13 +133,20 @@ public class AdminController {
         return responseData;
     }
 
-    @GetMapping("findExtra")
-    public ResponseData findExtra(@RequestParam("id") Integer adminId) {
+    @GetMapping("findExtraPage")
+    public ResponseData findExtraPage(@RequestParam("id") Integer adminId,
+                                      @RequestParam("pageNum") Integer pageNum,
+                                      @RequestParam("pageSize") Integer pageSize,
+                                      // 查询条件
+                                      @RequestParam(value = "name", defaultValue = "") String name) {
         log.info("adminId: " + adminId);
+        log.info("pageNum: " + pageNum);
+        log.info("pageSize: " + pageSize);
+        log.info("name: " + name);
         ResponseData responseData = new ResponseData();
         try {
-            List<ExtraVO> extraList = adminService.findExtra(adminId);
-            responseData.setSuccess(true).setData(extraList);
+            Map<String, Object> extraMap = adminService.findExtraPage(adminId, pageNum, pageSize, name);
+            responseData.setSuccess(true).setData(extraMap);
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setSuccess(false).setMessage("查询出错，请重试！");

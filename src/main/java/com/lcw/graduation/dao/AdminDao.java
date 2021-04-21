@@ -30,7 +30,13 @@ public interface AdminDao {
 
     List<RecordVO> getAllRecords();
 
-    List<ExtraVO> findExtraById(Integer adminId);
+    List<ExtraVO> findExtraPageById(@Param("adminId") Integer adminId,
+                                    @Param("start")Integer start,
+                                    @Param("count")Integer count,
+                                    @Param("name")String name);
+
+    Integer findExtraTotalById(@Param("adminId") Integer adminId,
+                               @Param("name") String name);
 
     void insertExtra(Extra extra);
 

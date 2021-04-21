@@ -59,11 +59,18 @@
             left join t_doctor d on (r.doctorId = d.id);
     </select>
 
-    <select id="findExtraById" parameterType="int" resultType="ExtraVO">
+    <select id="findExtraPageById" resultType="ExtraVO">
         select e.*, d.name name
         from t_extra e
         left join t_doctor d on(e.doctorId=d.id)
-        where e.adminId=#{adminId};
+        where e.adminId=#{adminId} and d.name like concat('%',#{name}, '%')
+        order by e.id
+        limit #{start}, #{count};
+    </select>
+    <select id="findExtraTotalById" resultType="int">
+        select count(e.id) from t_extra e
+        left join t_doctor d on(e.doctorId=d.id)
+        where adminId=#{adminId} and d.name like concat('%',#{name}, '%');
     </select>
 
     <insert id="insertExtra" parameterType="Extra" useGeneratedKeys="true" keyColumn="id" keyProperty="id">

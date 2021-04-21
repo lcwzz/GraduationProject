@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,8 +74,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<ExtraVO> findExtra(Integer adminId) {
-        return adminDao.findExtraById(adminId);
+    public Map<String, Object> findExtraPage(Integer adminId, Integer pageNum, Integer pageSize, String name) {
+        List<ExtraVO> extraVOList = adminDao.findExtraPageById(adminId, (pageNum - 1) * pageSize, pageSize, name);
+        Integer total = adminDao.findExtraTotalById(adminId, name);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("extra", extraVOList);
+        map.put("total", total);
+        return map;
     }
 
     @Override
