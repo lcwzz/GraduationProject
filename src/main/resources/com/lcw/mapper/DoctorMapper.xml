@@ -33,11 +33,7 @@
     </update>
 
     <select id="findExtraById" parameterType="int" resultType="ExtraVO">
-        select e.id id,
-               money,
-               sign,
-               reason,
-               a.name name
+        select e.*, a.name name
         from t_extra e
         left join t_admin a on(e.adminId=a.id)
         where e.doctorId=#{doctorId};

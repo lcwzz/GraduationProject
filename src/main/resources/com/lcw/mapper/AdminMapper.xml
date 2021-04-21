@@ -18,4 +18,64 @@
                education = #{education}
         where id=#{id};
     </update>
+
+    <select id="getAllDoctors" resultType="DoctorVO">
+        select d.id id,
+               d.name name,
+               sex,
+               age,
+               face,
+               education,
+               salary,
+               departmentId,
+               de.name departmentName
+        from t_doctor d left join t_department de on(d.departmentId=de.id);
+    </select>
+    <select id="getAllDepartments" resultType="Department">
+        select * from t_department;
+    </select>
+
+    <update id="updateDoctor" parameterType="Doctor">
+        update t_doctor set
+                        face = #{face},
+                        education = #{education},
+                        salary = #{salary},
+                        departmentId = #{departmentId}
+        where id=#{id};
+    </update>
+
+    <delete id="deleteDoctorById" parameterType="int">
+        delete from t_doctor where id=#{doctorId};
+    </delete>
+
+    <insert id="insertDoctor" parameterType="Doctor" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_doctor(
+            account, password, name, sex, age, face, education, salary, departmentId) values (
+            #{account}, #{password}, #{name}, #{sex}, #{age}, #{face}, #{education}, #{salary}, #{departmentId});
+    </insert>
+
+    <select id="getAllRecords" resultType="RecordVO">
+        select r.*, d.name doctorName from t_record r
+            left join t_doctor d on (r.doctorId = d.id);
+    </select>
+
+    <select id="findExtraById" parameterType="int" resultType="ExtraVO">
+        select e.*, d.name name
+        from t_extra e
+        left join t_doctor d on(e.doctorId=d.id)
+        where e.adminId=#{adminId};
+    </select>
+
+    <insert id="insertExtra" parameterType="Extra" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_extra(money, sign, reason, doctorId, adminId)
+        values(#{money}, #{sign}, #{reason}, #{doctorId}, #{adminId});
+    </insert>
+    <update id="updateExtra" parameterType="Extra">
+        update t_extra set money=#{money}, sign=#{sign},
+                           reason=#{reason}, doctorId=#{doctorId}, adminId=#{adminId}
+        where id=#{id};
+    </update>
+    <delete id="deleteExtraById" parameterType="int">
+        delete from t_extra where id=#{id};
+    </delete>
 </mapper>

@@ -14,5 +14,10 @@ public class ExtraVO {
     private Integer money;
     private String sign;
     private String reason;
+    private String doctorId;
+    private String adminId;
+
+    // 管理员查询则为医生名字
+    // 医生查询则为管理员名字
     private String name;
 }
