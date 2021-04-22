@@ -90,9 +90,20 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void addProject(Project project) {
-        project.setState("未审核");
-        project.setDate(new Timestamp(System.currentTimeMillis()));
-        doctorDao.insertProject(project);
+    public void addOrUpdateProject(Project project) {
+        if (project.getId() == null) {
+            project.setState("未审核");
+            project.setDate(new Timestamp(System.currentTimeMillis()));
+            doctorDao.insertProject(project);
+        } else {
+            doctorDao.updateProject(project);
+        }
     }
+
+    @Override
+    public void deleteProject(Integer id) {
+        doctorDao.deleteProjectById(id);
+    }
+
+
 }

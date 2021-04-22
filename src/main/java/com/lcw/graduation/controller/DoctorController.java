@@ -106,16 +106,30 @@ public class DoctorController {
         return responseData;
     }
 
-    @PostMapping("addProject")
-    public ResponseData addProject(@RequestBody Project project) {
+    @PostMapping("addOrUpdateProject")
+    public ResponseData addOrUpdateProject(@RequestBody Project project) {
         log.info(project.toString());
         ResponseData responseData = new ResponseData();
         try {
-            doctorService.addProject(project);
+            doctorService.addOrUpdateProject(project);
             responseData.setSuccess(true);
         } catch (Exception e) {
             log.error(e.getMessage());
-            responseData.setSuccess(false).setMessage("添加出错，请重试！");
+            responseData.setSuccess(false).setMessage("操作出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("deleteProject")
+    public ResponseData deleteProject(@RequestParam("id") Integer id) {
+        log.info("id: " + id);
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.deleteProject(id);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("删除出错，请重试！");
         }
         return responseData;
     }

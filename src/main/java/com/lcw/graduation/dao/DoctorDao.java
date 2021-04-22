@@ -23,4 +23,8 @@ public interface DoctorDao {
     List<ProjectVO> findProjectsById(Integer doctorId);
 
     void insertProject(Project project);
+
+    void updateProject(Project project);
+
+    void deleteProjectById(Integer id);
 }

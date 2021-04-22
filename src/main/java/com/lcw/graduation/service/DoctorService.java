@@ -23,5 +23,7 @@ public interface DoctorService {
 
     List<ProjectVO> findProjects(Integer doctorId);
 
-    void addProject(Project project);
+    void addOrUpdateProject(Project project);
+
+    void deleteProject(Integer id);
 }

@@ -44,7 +44,7 @@
         values(#{time}, #{state}, #{doctorId});
     </insert>
     <select id="findRecordsById" parameterType="int" resultType="Record">
-        select * from t_record where doctorId=#{doctorId} order by time desc;
+        select * from t_record where doctorId=#{doctorId};
     </select>
 
     <select id="findProjectsById" parameterType="int" resultType="ProjectVO">
@@ -57,4 +57,12 @@
         insert into t_project(description, state, date, money, doctorId)
         values(#{description}, #{state}, #{date}, #{money}, #{doctorId});
     </insert>
+    <update id="updateProject" parameterType="Project">
+        update t_project
+        set description=#{description}, money=#{money}
+        where id=#{id};
+    </update>
+    <delete id="deleteProjectById" parameterType="int">
+        delete from t_project where id=#{id};
+    </delete>
 </mapper>
