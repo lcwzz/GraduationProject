@@ -4,7 +4,6 @@ import com.lcw.graduation.entity.po.Admin;
 import com.lcw.graduation.entity.po.Department;
 import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
-import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 import com.lcw.graduation.service.AdminService;
@@ -56,7 +55,7 @@ public class AdminController {
     public ResponseData getAllDoctors() {
         ResponseData responseData = new ResponseData();
         try {
-            List<DoctorVO> doctors = adminService.getAllDoctors();
+            List<Doctor> doctors = adminService.getAllDoctors();
             responseData.setSuccess(true).setData(doctors);
         } catch (Exception e) {
             log.error(e.getMessage());

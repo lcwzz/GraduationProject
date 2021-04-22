@@ -18,7 +18,7 @@ public interface AdminDao {
 
     void updateAdmin(Admin admin);
 
-    List<DoctorVO> getAllDoctors();
+    List<Doctor> getAllDoctors();
 
     List<Department> getAllDepartments();
 

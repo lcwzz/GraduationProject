@@ -4,7 +4,6 @@ import com.lcw.graduation.entity.po.Admin;
 import com.lcw.graduation.entity.po.Department;
 import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
-import com.lcw.graduation.entity.vo.DoctorVO;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 
@@ -16,7 +15,7 @@ public interface AdminService {
 
     void update(Admin admin);
 
-    List<DoctorVO> getAllDoctors();
+    List<Doctor> getAllDoctors();
 
     List<Department> getAllDepartments();
 

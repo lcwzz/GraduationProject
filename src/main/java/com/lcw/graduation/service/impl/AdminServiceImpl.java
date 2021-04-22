@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<DoctorVO> getAllDoctors() {
+    public List<Doctor> getAllDoctors() {
         return adminDao.getAllDoctors();
     }
 
