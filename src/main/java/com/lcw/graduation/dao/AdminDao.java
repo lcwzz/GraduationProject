@@ -49,4 +49,10 @@ public interface AdminDao {
     void updateProjectState(@Param("id") Integer id,
                             @Param("state") String state,
                             @Param("adminId") Integer adminId);
+
+    List<DoctorVO> getDoctorPage(@Param("start")Integer start,
+                                 @Param("count")Integer count,
+                                 @Param("name")String name);
+
+    Integer getDoctorPageTotal(String name);
 }

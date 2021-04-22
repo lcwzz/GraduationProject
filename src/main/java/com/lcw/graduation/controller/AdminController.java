@@ -65,6 +65,25 @@ public class AdminController {
         return responseData;
     }
 
+    @GetMapping("getDoctorPage")
+    public ResponseData getDoctorPage(@RequestParam("pageNum") Integer pageNum,
+                                      @RequestParam("pageSize") Integer pageSize,
+                                      // 查询条件
+                                      @RequestParam(value = "name", defaultValue = "") String name) {
+        log.info("pageNum: " + pageNum);
+        log.info("pageSize: " + pageSize);
+        log.info("name: " + name);
+        ResponseData responseData = new ResponseData();
+        try {
+            Map<String, Object> map = adminService.getDoctorPage(pageNum, pageSize, name);
+            responseData.setSuccess(true).setData(map);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
     @GetMapping("getAllDepartments")
     public ResponseData getAllDepartments() {
         ResponseData responseData = new ResponseData();

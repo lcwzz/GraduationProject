@@ -31,6 +31,26 @@
                de.name departmentName
         from t_doctor d left join t_department de on(d.departmentId=de.id);
     </select>
+    <select id="getDoctorPage" resultType="DoctorVO">
+        select d.id id,
+               d.name name,
+               sex,
+               age,
+               face,
+               education,
+               salary,
+               departmentId,
+               de.name departmentName
+        from t_doctor d left join t_department de on(d.departmentId=de.id)
+        where d.name like concat('%',#{name}, '%')
+        order by d.id
+        limit #{start}, #{count};
+    </select>
+    <select id="getDoctorPageTotal" parameterType="String" resultType="int">
+        select count(id) from t_doctor
+        where name like concat('%',#{name}, '%');
+    </select>
+
     <select id="getAllDepartments" resultType="Department">
         select * from t_department;
     </select>

@@ -110,4 +110,14 @@ public class AdminServiceImpl implements AdminService {
         adminDao.updateProjectState(id, state, adminId);
     }
 
+    @Override
+    public Map<String, Object> getDoctorPage(Integer pageNum, Integer pageSize, String name) {
+        List<DoctorVO> doctors = adminDao.getDoctorPage((pageNum - 1) * pageSize, pageSize, name);
+        Integer total = adminDao.getDoctorPageTotal(name);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("doctors", doctors);
+        map.put("total", total);
+        return map;
+    }
+
 }

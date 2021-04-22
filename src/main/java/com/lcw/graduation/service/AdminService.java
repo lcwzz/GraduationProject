@@ -37,4 +37,6 @@ public interface AdminService {
     List<ProjectVO> getAllProjects(Integer adminId);
 
     void checkProject(Map<String, String> checkResult);
+
+    Map<String, Object> getDoctorPage(Integer pageNum, Integer pageSize, String name);
 }
