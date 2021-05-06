@@ -1,12 +1,12 @@
 package com.lcw.graduation.service;
 
-import com.lcw.graduation.entity.po.Admin;
-import com.lcw.graduation.entity.po.Department;
-import com.lcw.graduation.entity.po.Doctor;
-import com.lcw.graduation.entity.po.Extra;
+import com.lcw.graduation.entity.po.*;
+import com.lcw.graduation.entity.vo.FileVO;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +38,12 @@ public interface AdminService {
     void checkProject(Map<String, String> checkResult);
 
     Map<String, Object> getDoctorPage(Integer pageNum, Integer pageSize, String name);
+
+    void saveFile(Integer id, MultipartFile file) throws IOException;
+
+    List<FileVO> getFiles();
+
+    File findFileById(Integer id);
+
+    void deleteFile(Integer id);
 }

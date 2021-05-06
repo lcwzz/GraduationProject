@@ -107,4 +107,22 @@
         update t_project set state=#{state}, adminId=#{adminId}
         where id=#{id};
     </update>
+
+    <insert id="insertFile" parameterType="file" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_file(oldName, newName, path, date, adminId)
+        values (#{oldName}, #{newName}, #{path}, #{date}, #{adminId});
+    </insert>
+
+    <select id="findAllFiles" resultType="FileVO">
+        select f.*, a.name adminName
+        from t_file f left join t_admin a on (f.adminId=a.id);
+    </select>
+
+    <select id="findFileById" parameterType="int" resultType="File">
+        select * from t_file where id=#{id};
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from t_file where id=#{id};
+    </delete>
 </mapper>

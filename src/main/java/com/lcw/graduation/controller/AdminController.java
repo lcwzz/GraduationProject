@@ -11,6 +11,7 @@ import com.lcw.graduation.util.ResponseData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -227,4 +228,21 @@ public class AdminController {
         }
         return responseData;
     }
+
+    @PostMapping("uploadFile")
+    public ResponseData uploadFile(@RequestParam("id") Integer id,
+                                   @RequestParam("file") MultipartFile file) {
+        log.info(id.toString());
+        log.info(file.getOriginalFilename());
+        ResponseData responseData = new ResponseData();
+        try {
+            adminService.saveFile(id, file);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("上传出错，请重试！");
+        }
+        return responseData;
+    }
+
 }

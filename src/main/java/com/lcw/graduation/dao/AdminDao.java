@@ -1,13 +1,7 @@
 package com.lcw.graduation.dao;
 
-import com.lcw.graduation.entity.po.Admin;
-import com.lcw.graduation.entity.po.Department;
-import com.lcw.graduation.entity.po.Doctor;
-import com.lcw.graduation.entity.po.Extra;
-import com.lcw.graduation.entity.vo.DoctorVO;
-import com.lcw.graduation.entity.vo.ExtraVO;
-import com.lcw.graduation.entity.vo.ProjectVO;
-import com.lcw.graduation.entity.vo.RecordVO;
+import com.lcw.graduation.entity.po.*;
+import com.lcw.graduation.entity.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -55,4 +49,12 @@ public interface AdminDao {
                                  @Param("name")String name);
 
     Integer getDoctorPageTotal(String name);
+
+    void insertFile(File fileDb);
+
+    List<FileVO> findAllFiles();
+
+    File findFileById(Integer id);
+
+    void deleteById(Integer id);
 }
