@@ -1,5 +1,6 @@
 package com.lcw.graduation.service;
 
+import com.lcw.graduation.entity.po.Medical;
 import com.lcw.graduation.entity.po.Project;
 import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
@@ -26,4 +27,10 @@ public interface DoctorService {
     void addOrUpdateProject(Project project);
 
     void deleteProject(Integer id);
+
+    Map<String, Object> getMedicalPage(Integer pageNum, Integer pageSize, String name, Integer doctorId);
+
+    void addOrUpdateExtra(Medical medical);
+
+    void deleteMedical(Integer id);
 }

@@ -2,6 +2,7 @@ package com.lcw.graduation.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.lcw.graduation.dao.DoctorDao;
+import com.lcw.graduation.entity.po.Medical;
 import com.lcw.graduation.entity.po.Project;
 import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,6 +105,31 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void deleteProject(Integer id) {
         doctorDao.deleteProjectById(id);
+    }
+
+    @Override
+    public Map<String, Object> getMedicalPage(Integer pageNum, Integer pageSize, String name, Integer doctorId) {
+        List<Medical> doctors = doctorDao.getMedicalPage((pageNum - 1) * pageSize, pageSize, name, doctorId);
+        Integer total = doctorDao.getMedicalPageTotal(doctorId, name);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("medicalRecords", doctors);
+        map.put("total", total);
+        return map;
+    }
+
+    @Override
+    public void addOrUpdateExtra(Medical medical) {
+        if (medical.getId() == null) {
+            medical.setDate(new Timestamp(System.currentTimeMillis()));
+            doctorDao.insertMedical(medical);
+        } else {
+            doctorDao.updateMedical(medical);
+        }
+    }
+
+    @Override
+    public void deleteMedical(Integer id) {
+        doctorDao.deleteMedical(id);
     }
 
 

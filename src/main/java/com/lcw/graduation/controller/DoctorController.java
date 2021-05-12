@@ -1,5 +1,6 @@
 package com.lcw.graduation.controller;
 
+import com.lcw.graduation.entity.po.Medical;
 import com.lcw.graduation.entity.po.Project;
 import com.lcw.graduation.entity.po.Record;
 import com.lcw.graduation.entity.vo.DoctorVO;
@@ -126,6 +127,55 @@ public class DoctorController {
         ResponseData responseData = new ResponseData();
         try {
             doctorService.deleteProject(id);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("删除出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("getMedicalPage")
+    public ResponseData getMedicalPage(@RequestParam("pageNum") Integer pageNum,
+                                       @RequestParam("pageSize") Integer pageSize,
+                                       // 查询条件
+                                       @RequestParam(value = "name", defaultValue = "") String name,
+                                       @RequestParam(value = "id") Integer doctorId) {
+        log.info("pageNum: " + pageNum);
+        log.info("pageSize: " + pageSize);
+        log.info("name: " + name);
+        log.info("doctorId: " + doctorId);
+        ResponseData responseData = new ResponseData();
+        try {
+            Map<String, Object> map = doctorService.getMedicalPage(pageNum, pageSize, name, doctorId);
+            responseData.setSuccess(true).setData(map);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("查询出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @PostMapping("addOrUpdateMedical")
+    public ResponseData addOrUpdateMedical(@RequestBody Medical medical) {
+        log.info(medical.toString());
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.addOrUpdateExtra(medical);
+            responseData.setSuccess(true);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("操作出错，请重试！");
+        }
+        return responseData;
+    }
+
+    @GetMapping("deleteMedical")
+    public ResponseData deleteMedical(@RequestParam("id") Integer id) {
+        log.info("id: " + id);
+        ResponseData responseData = new ResponseData();
+        try {
+            doctorService.deleteMedical(id);
             responseData.setSuccess(true);
         } catch (Exception e) {
             log.error(e.getMessage());

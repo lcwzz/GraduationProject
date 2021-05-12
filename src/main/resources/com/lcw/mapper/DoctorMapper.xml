@@ -65,4 +65,26 @@
     <delete id="deleteProjectById" parameterType="int">
         delete from t_project where id=#{id};
     </delete>
+
+    <select id="getMedicalPage" resultType="Medical">
+        select * from t_medical
+        where doctorId=#{id} and name like concat('%',#{name}, '%')
+        limit #{start}, #{count};
+    </select>
+    <select id="getMedicalPageTotal" resultType="int">
+        select count(id) from t_medical
+        where doctorId=#{id} and name like concat('%',#{name}, '%');
+    </select>
+    <insert id="insertMedical" parameterType="Medical" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_medical(`name`, `age`, `sex`, `result`, `advice`, `date`, `doctorId`)
+        values(#{name}, #{age}, #{sex}, #{result}, #{advice}, #{date}, #{doctorId});
+    </insert>
+    <update id="updateMedical" parameterType="Medical">
+        update t_medical set `name`=#{name}, `age`=#{age}, `sex`=#{sex},
+                             `result`=#{result}, `advice`=#{advice}
+        where id=#{id};
+    </update>
+    <delete id="deleteMedical" parameterType="int">
+        delete from t_medical where id=#{id};
+    </delete>
 </mapper>
