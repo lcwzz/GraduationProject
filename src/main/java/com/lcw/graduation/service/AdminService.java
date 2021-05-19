@@ -4,6 +4,7 @@ import com.lcw.graduation.entity.po.*;
 import com.lcw.graduation.entity.vo.FileVO;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
+import com.lcw.graduation.entity.DoctorEvaluation;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -46,4 +47,6 @@ public interface AdminService {
     File findFileById(Integer id);
 
     void deleteFile(Integer id);
+
+    List<DoctorEvaluation> evaluateDoctor();
 }

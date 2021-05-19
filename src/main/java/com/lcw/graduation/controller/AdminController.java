@@ -7,6 +7,7 @@ import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.ProjectVO;
 import com.lcw.graduation.entity.vo.RecordVO;
 import com.lcw.graduation.service.AdminService;
+import com.lcw.graduation.entity.DoctorEvaluation;
 import com.lcw.graduation.util.ResponseData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,4 +246,16 @@ public class AdminController {
         return responseData;
     }
 
+    @GetMapping("evaluateDoctor")
+    public ResponseData evaluateDoctor() {
+        ResponseData responseData = new ResponseData();
+        try {
+            List<DoctorEvaluation> list = adminService.evaluateDoctor();
+            responseData.setSuccess(true).setData(list);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setSuccess(false).setMessage("处理出错，请重试！");
+        }
+        return responseData;
+    }
 }

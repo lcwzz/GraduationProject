@@ -125,4 +125,20 @@
     <delete id="deleteById" parameterType="int">
         delete from t_file where id=#{id};
     </delete>
+
+    <select id="getDoctorEvaluation" resultType="DoctorEvaluation">
+        select id, name from t_doctor;
+    </select>
+    <select id="getMedicalScore" parameterType="int" resultType="int">
+        select count(id) from t_medical where doctorId=#{id}
+    </select>
+    <select id="getRecordScore" parameterType="int" resultType="int">
+        select count(id) from t_record where doctorId=#{id} and state != "正常";
+    </select>
+    <select id="getExtraRewardScore" parameterType="int" resultType="int">
+        select count(id) from t_extra where doctorId=#{id} and sign="奖金";
+    </select>
+    <select id="getExtraPunishmentScore" parameterType="int" resultType="int">
+        select count(id) from t_extra where doctorId=#{id} and sign="罚款";
+    </select>
 </mapper>

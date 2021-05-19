@@ -7,6 +7,8 @@ import com.lcw.graduation.entity.po.Doctor;
 import com.lcw.graduation.entity.po.Extra;
 import com.lcw.graduation.entity.vo.*;
 import com.lcw.graduation.service.AdminService;
+import com.lcw.graduation.entity.DoctorEvaluation;
+import com.lcw.graduation.util.KMeans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -32,7 +31,7 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
-    private String filePath = ResourceUtils.getURL("classpath:").getPath() + "static/files/";
+    private String filePath = ResourceUtils.getURL("classpath:").getPath() + "static/sql/";
 
     public AdminServiceImpl() throws FileNotFoundException {
         log.info(filePath);
@@ -179,4 +178,34 @@ public class AdminServiceImpl implements AdminService {
         adminDao.deleteById(id);
     }
 
+    @Override
+    public List<DoctorEvaluation> evaluateDoctor() {
+        KMeans kMeans = new KMeans(generateDataset());
+        kMeans.cluster();
+        return kMeans.getDataset();
+    }
+
+    private List<DoctorEvaluation> generateDataset() {
+        List<DoctorEvaluation> list = adminDao.getDoctorEvaluation();
+        for (DoctorEvaluation doctorEvaluation : list) {
+            doctorEvaluation.setX(getMedicalScore(doctorEvaluation.getId()));
+            doctorEvaluation.setY(getRecordScore(doctorEvaluation.getId()));
+            doctorEvaluation.setZ(getExtraScore(doctorEvaluation.getId()));
+        }
+        return list;
+    }
+
+    private int getExtraScore(int id) {
+        int reward = adminDao.getExtraRewardScore(id);
+        int punishment = adminDao.getExtraPunishmentScore(id);
+        return reward - punishment;
+    }
+
+    private int getRecordScore(int id) {
+        return -adminDao.getRecordScore(id);
+    }
+
+    private int getMedicalScore(int id) {
+        return adminDao.getMedicalScore(id);
+    }
 }

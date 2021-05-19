@@ -2,6 +2,7 @@ package com.lcw.graduation.dao;
 
 import com.lcw.graduation.entity.po.*;
 import com.lcw.graduation.entity.vo.*;
+import com.lcw.graduation.entity.DoctorEvaluation;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -57,4 +58,14 @@ public interface AdminDao {
     File findFileById(Integer id);
 
     void deleteById(Integer id);
+
+    List<DoctorEvaluation> getDoctorEvaluation();
+
+    Integer getMedicalScore(Integer id);
+
+    Integer getRecordScore(Integer id);
+
+    Integer getExtraRewardScore(Integer id);
+
+    Integer getExtraPunishmentScore(Integer id);
 }
